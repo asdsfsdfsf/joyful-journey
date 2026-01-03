@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Video,
-  Sparkles,
   Image,
   FileText,
   Clock,
@@ -11,23 +10,25 @@ import {
   HelpCircle,
   LogOut,
   ChevronLeft,
-  FolderOpen,
   Wand2,
-  Megaphone,
+  Repeat,
+  Clapperboard,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import StoryShortLogo from "@/components/StoryShortLogo";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
+const aiGenerationItems = [
+  { title: "Prompt to Video", icon: Video, href: "/dashboard/prompt-to-video" },
+  { title: "Prompt to Image", icon: Image, href: "/dashboard/prompt-to-image" },
+];
+
 const mainNavItems = [
   { title: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
-  { title: "Create Video", icon: Video, href: "/dashboard/create" },
-  { title: "AI Generator", icon: Sparkles, href: "/dashboard/ai-generator" },
-  { title: "Ad Creator", icon: Megaphone, href: "/dashboard/ads" },
+  { title: "Generate Story Videos", icon: Clapperboard, href: "/dashboard/story-videos" },
+  { title: "Series Automation", icon: Repeat, href: "/dashboard/series" },
   { title: "Templates", icon: Wand2, href: "/dashboard/templates" },
-  { title: "My Projects", icon: FolderOpen, href: "/dashboard/projects" },
-  { title: "Media Library", icon: Image, href: "/dashboard/media" },
   { title: "Scripts", icon: FileText, href: "/dashboard/scripts" },
   { title: "History", icon: Clock, href: "/dashboard/history" },
 ];
@@ -74,23 +75,56 @@ const DashboardSidebar = () => {
         </Button>
       </div>
 
+      {/* AI Generation Section */}
+      <nav className="py-4 px-2 space-y-1 border-b border-border">
+        {!collapsed && (
+          <span className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            AI Generation
+          </span>
+        )}
+        <div className="mt-2 space-y-1">
+          {aiGenerationItems.map((item) => (
+            <Link
+              key={item.href}
+              to={item.href}
+              className={cn(
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                isActive(item.href)
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
+            >
+              <item.icon className="h-5 w-5 flex-shrink-0" />
+              {!collapsed && <span>{item.title}</span>}
+            </Link>
+          ))}
+        </div>
+      </nav>
+
       {/* Main Navigation */}
       <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto">
-        {mainNavItems.map((item) => (
-          <Link
-            key={item.href}
-            to={item.href}
-            className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
-              isActive(item.href)
-                ? "bg-primary/10 text-primary"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground"
-            )}
-          >
-            <item.icon className="h-5 w-5 flex-shrink-0" />
-            {!collapsed && <span>{item.title}</span>}
-          </Link>
-        ))}
+        {!collapsed && (
+          <span className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            Main
+          </span>
+        )}
+        <div className="mt-2 space-y-1">
+          {mainNavItems.map((item) => (
+            <Link
+              key={item.href}
+              to={item.href}
+              className={cn(
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                isActive(item.href)
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+              )}
+            >
+              <item.icon className="h-5 w-5 flex-shrink-0" />
+              {!collapsed && <span>{item.title}</span>}
+            </Link>
+          ))}
+        </div>
       </nav>
 
       {/* Bottom Navigation */}
