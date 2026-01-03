@@ -13,16 +13,12 @@ import {
   Wand2,
   Repeat,
   Clapperboard,
+  Coins,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import StoryShortLogo from "@/components/StoryShortLogo";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-
-const aiGenerationItems = [
-  { title: "Prompt to Video", icon: Video, href: "/dashboard/prompt-to-video" },
-  { title: "Prompt to Image", icon: Image, href: "/dashboard/prompt-to-image" },
-];
 
 const mainNavItems = [
   { title: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
@@ -31,6 +27,11 @@ const mainNavItems = [
   { title: "Templates", icon: Wand2, href: "/dashboard/templates" },
   { title: "Scripts", icon: FileText, href: "/dashboard/scripts" },
   { title: "History", icon: Clock, href: "/dashboard/history" },
+];
+
+const aiGenerationItems = [
+  { title: "Prompt to Video", icon: Video, href: "/dashboard/prompt-to-video" },
+  { title: "Prompt to Image", icon: Image, href: "/dashboard/prompt-to-image" },
 ];
 
 const bottomNavItems = [
@@ -42,6 +43,7 @@ const bottomNavItems = [
 const DashboardSidebar = () => {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
+  const availableCredits = 2450;
 
   const isActive = (href: string) => location.pathname === href;
 
@@ -75,20 +77,20 @@ const DashboardSidebar = () => {
         </Button>
       </div>
 
-      {/* AI Generation Section */}
+      {/* Main Navigation */}
       <nav className="py-4 px-2 space-y-1 border-b border-border">
         {!collapsed && (
           <span className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            AI Generation
+            Main
           </span>
         )}
         <div className="mt-2 space-y-1">
-          {aiGenerationItems.map((item) => (
+          {mainNavItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 hover:translate-x-1",
                 isActive(item.href)
                   ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -101,20 +103,20 @@ const DashboardSidebar = () => {
         </div>
       </nav>
 
-      {/* Main Navigation */}
+      {/* AI Generation Section */}
       <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto">
         {!collapsed && (
           <span className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Main
+            AI Generation
           </span>
         )}
         <div className="mt-2 space-y-1">
-          {mainNavItems.map((item) => (
+          {aiGenerationItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 hover:translate-x-1",
                 isActive(item.href)
                   ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -134,7 +136,7 @@ const DashboardSidebar = () => {
             key={item.href}
             to={item.href}
             className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all",
+              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 hover:translate-x-1",
               isActive(item.href)
                 ? "bg-primary/10 text-primary"
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -155,20 +157,23 @@ const DashboardSidebar = () => {
         </button>
       </div>
 
-      {/* User Profile */}
-      {!collapsed && (
-        <div className="p-4 border-t border-border">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center">
-              <span className="text-sm font-semibold text-primary">JD</span>
-            </div>
+      {/* User Profile with Credits */}
+      <div className="p-4 border-t border-border">
+        <div className="flex items-center gap-3">
+          <div className="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center">
+            <span className="text-sm font-semibold text-primary">JD</span>
+          </div>
+          {!collapsed && (
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-foreground truncate">John Doe</p>
-              <p className="text-xs text-muted-foreground truncate">Pro Plan</p>
+              <div className="flex items-center gap-1.5 text-xs text-primary">
+                <Coins className="h-3 w-3" />
+                <span className="font-medium">{availableCredits.toLocaleString()} credits</span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </aside>
   );
 };

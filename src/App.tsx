@@ -15,6 +15,15 @@ import Terms from "./pages/Terms";
 import Refund from "./pages/Refund";
 import Dashboard from "./pages/Dashboard";
 import DashboardSettings from "./pages/DashboardSettings";
+import StoryVideos from "./pages/dashboard/StoryVideos";
+import SeriesAutomation from "./pages/dashboard/SeriesAutomation";
+import Templates from "./pages/dashboard/Templates";
+import Scripts from "./pages/dashboard/Scripts";
+import History from "./pages/dashboard/History";
+import PromptToVideo from "./pages/dashboard/PromptToVideo";
+import PromptToImage from "./pages/dashboard/PromptToImage";
+import Billing from "./pages/dashboard/Billing";
+import Support from "./pages/dashboard/Support";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +47,15 @@ const App = () => (
           <Route path="/refund" element={<Refund />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/settings" element={<DashboardSettings />} />
+          <Route path="/dashboard/story-videos" element={<StoryVideos />} />
+          <Route path="/dashboard/series" element={<SeriesAutomation />} />
+          <Route path="/dashboard/templates" element={<Templates />} />
+          <Route path="/dashboard/scripts" element={<Scripts />} />
+          <Route path="/dashboard/history" element={<History />} />
+          <Route path="/dashboard/prompt-to-video" element={<PromptToVideo />} />
+          <Route path="/dashboard/prompt-to-image" element={<PromptToImage />} />
+          <Route path="/dashboard/billing" element={<Billing />} />
+          <Route path="/dashboard/support" element={<Support />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
